@@ -18,11 +18,9 @@ public class Article implements Serializable {
     public String getThumbNail() {
         return thumbNail;
     }
-
     public String getHeadline() {
         return headline;
     }
-
     public String getWebUrl() {
         return webUrl;
     }

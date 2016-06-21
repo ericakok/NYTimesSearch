@@ -145,5 +145,36 @@ public class SearchActivity extends AppCompatActivity {
         // This method probably sends out a network request and appends new data items to your adapter.
         // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
         // Deserialize API response and then construct new objects to append to the adapter
+
+        String query = etQuery.getText().toString();
+
+        //Toast.makeText(this, "Searching for " + query, Toast.LENGTH_LONG).show();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://api.nytimes.com/svc/search/v2/articlesearch.json";
+
+        RequestParams params = new RequestParams();
+        params.put("api-key", "09ce45605b1e44f1a69bf81db1375f84");
+        params.put("page", offset);
+        params.put("q", query);
+
+        client.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("DEBUG", response.toString());
+                JSONArray articleJsonResults = null;
+
+                try {
+                    articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
+                    // Log.d("DEBUG", articleJsonResults.toString());
+                    adapter.addAll(Article.fromJSONArray(articleJsonResults));
+                    //adapter.notifyDataSetChanged();
+                    Log.d("DEBUG", articles.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }

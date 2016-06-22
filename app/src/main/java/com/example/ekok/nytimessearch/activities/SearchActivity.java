@@ -37,6 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     EditText etQuery;
     GridView gvResults;
     Button btnSearch;
+    String query;
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
@@ -65,9 +66,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void setupViews() {
-        etQuery = (EditText) findViewById(R.id.etQuery);
         gvResults = (GridView) findViewById(R.id.gvResults);
-        btnSearch = (Button) findViewById(R.id.btnSearch);
         articles = new ArrayList<>();
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
@@ -101,8 +100,9 @@ public class SearchActivity extends AppCompatActivity {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String q) {
                 // perform query here
+                query = q;
                 onArticleSearch(searchView);
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
@@ -136,7 +136,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onArticleSearch(View view) {
-        String query = etQuery.getText().toString();
+        //String query = etQuery.getText().toString();
 
         //Toast.makeText(this, "Searching for " + query, Toast.LENGTH_LONG).show();
 
@@ -173,8 +173,6 @@ public class SearchActivity extends AppCompatActivity {
         // This method probably sends out a network request and appends new data items to your adapter.
         // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
         // Deserialize API response and then construct new objects to append to the adapter
-
-        String query = etQuery.getText().toString();
 
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "http://api.nytimes.com/svc/search/v2/articlesearch.json";

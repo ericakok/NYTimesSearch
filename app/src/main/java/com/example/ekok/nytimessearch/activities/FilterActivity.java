@@ -2,11 +2,16 @@ package com.example.ekok.nytimessearch.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.ekok.nytimessearch.DatePickerFragment;
+import com.example.ekok.nytimessearch.R;
 
 import java.util.Calendar;
 
@@ -20,8 +25,27 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_filter);
+    }
+
     public void onSubmit(View v) {
+        EditText etDate = (EditText) findViewById(R.id.etDate);
+        Spinner spinnerSort = (Spinner) findViewById(R.id.spinnerSort);
+        CheckBox cbArts = (CheckBox) findViewById(R.id.cbArts);
+        CheckBox cbFashion = (CheckBox) findViewById(R.id.cbFashion);
+        CheckBox cbSports = (CheckBox) findViewById(R.id.cbSports);
+
         Intent i = new Intent();
+
+        i.putExtra("etDate", etDate.getText().toString());
+        i.putExtra("spinnerSort", spinnerSort.toString());
+        i.putExtra("cbArts", cbArts.getText().toString());
+        i.putExtra("cbFashion", cbFashion.getText().toString());
+        i.putExtra("cbSports", cbSports.getText().toString());
+
         setResult(RESULT_OK, i);
         finish();
     }

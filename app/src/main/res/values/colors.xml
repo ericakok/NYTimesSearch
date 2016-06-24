@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#e59400</color>
     <color name="colorPrimaryDark">#e59400</color>
-    <color name="colorAccent">#FFFFFF</color>
-    <color name="cursorAccent">#FFFFFF</color>
-    <color name="controlNormal">#FFFFFF</color>
+    <color name="colorAccent">#6666ff</color>
+    <color name="cursorAccent">#000000</color>
+    <color name="controlNormal">#000000</color>
     <color name="controlActivated">#000005</color>
 </resources>

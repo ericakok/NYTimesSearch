@@ -5,4 +5,5 @@
     <string name="search">What would you like to know today?</string>
     <string name="title_activity_article">"@Article"</string>
     <string name="sort_prompt">Oldest</string>
+    <string name="filter">filter</string>
 </resources>

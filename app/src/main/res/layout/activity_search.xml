@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <ImageView
                 android:id="@+id/ivIcon"
@@ -42,5 +43,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_search" />
+
+    <!-- FrameLayout can be used to insert fragments to display the content of the screen -->
+    <!-- `app:layout_behavior` is set to a pre-defined behavior for scrolling -->
+    <FrameLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

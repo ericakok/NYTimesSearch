@@ -15,20 +15,27 @@ import android.webkit.WebViewClient;
 import com.example.ekok.nytimessearch.Article;
 import com.example.ekok.nytimessearch.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ArticleActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar_2) Toolbar toolbar;
+    @BindView(R.id.wvArticle) WebView wvArticle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_2);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         Article article = (Article) getIntent().getSerializableExtra("article");
 
-        WebView webView = (WebView) findViewById(R.id.wvArticle);
 
-        webView.setWebViewClient(new WebViewClient() {
+        wvArticle.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -36,7 +43,7 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
-        webView.loadUrl(article.getWebUrl());
+        wvArticle.loadUrl(article.getWebUrl());
     }
 
     @Override
@@ -50,7 +57,6 @@ public class ArticleActivity extends AppCompatActivity {
         shareIntent.setType("text/plain");
 
         // get reference to WebView
-        WebView wvArticle = (WebView) findViewById(R.id.wvArticle);
         // pass in the URL currently being used by the WebView
         shareIntent.putExtra(Intent.EXTRA_TEXT, wvArticle.getUrl());
 

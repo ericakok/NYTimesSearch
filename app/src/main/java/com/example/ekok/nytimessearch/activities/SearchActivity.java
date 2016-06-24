@@ -18,7 +18,6 @@ import com.example.ekok.nytimessearch.Article;
 import com.example.ekok.nytimessearch.ArticleArrayAdapter;
 import com.example.ekok.nytimessearch.EndlessScrollListener;
 import com.example.ekok.nytimessearch.R;
-import com.example.ekok.nytimessearch.SearchFilters;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -29,27 +28,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
 
-    GridView gvResults;
     String query;
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
 
-    SearchFilters filters;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.gvResults) GridView gvResults;
+
+    public static final int AGE_REQUEST_CODE = 55;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setupViews();
 
-        GridView gvResults = (GridView) findViewById(R.id.gvResults);
         // Attach the listener to the AdapterView onCreate
         gvResults.setOnScrollListener(new EndlessScrollListener() {
 
@@ -65,7 +67,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void setupViews() {
-        gvResults = (GridView) findViewById(R.id.gvResults);
         articles = new ArrayList<>();
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
@@ -91,6 +92,9 @@ public class SearchActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+
+        inflater.inflate(R.menu.menu_filter, menu);
+
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
@@ -98,7 +102,7 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setQueryHint("Searching for something?");
         searchView.requestFocus();
 
-        inflater.inflate(R.menu.menu_filter, menu);
+        //inflater.inflate(R.menu.menu_filter, menu);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -133,7 +137,12 @@ public class SearchActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_search) {
+            return true;
+        }
+        else if (id == R.id.miFilter) {
+            launchFilterView();
             return true;
         }
 
@@ -152,10 +161,6 @@ public class SearchActivity extends AppCompatActivity {
         params.put("api-key", "09ce45605b1e44f1a69bf81db1375f84");
         params.put("page", 0);
         params.put("q", query);
-
-        params.put("begin_date", filters.getBegin_date());
-        params.put("sort", filters.getSort());
-        params.put("news_desk", filters.getNews_desk());
 
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -211,7 +216,10 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-//    public void onPopupButtonClick(MenuItem item) {
-//        Toast.makeText(this, "Clicked!", Toast.LENGTH_LONG);
-//    }
+    public void launchFilterView() {
+        Intent i = new Intent(SearchActivity.this, FilterActivity.class);
+        startActivityForResult(i, AGE_REQUEST_CODE);
+    }
+
+    //SearchFilters filters;
 }

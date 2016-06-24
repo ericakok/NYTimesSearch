@@ -1,6 +1,7 @@
 package com.example.ekok.nytimessearch.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
@@ -17,6 +18,12 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
     public void showDatePickerDialog(View v) {
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void onSubmit(View v) {
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
+        finish();
     }
 
     // handle the date selected

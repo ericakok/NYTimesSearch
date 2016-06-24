@@ -6,7 +6,6 @@
         android:id="@+id/miFilter"
         android:icon="@drawable/ic_filter"
         app:showAsAction="always"
-        android:onClick=""
         android:title="Filter">
     </item>
 </menu>

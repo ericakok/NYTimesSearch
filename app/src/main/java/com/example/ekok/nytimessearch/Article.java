@@ -14,6 +14,8 @@ public class Article implements Serializable {
 
     String webUrl;
     String headline;
+    String thumbNail;
+
 
     public String getThumbNail() {
         return thumbNail;
@@ -25,7 +27,6 @@ public class Article implements Serializable {
         return webUrl;
     }
 
-    String thumbNail;
 
     public Article(JSONObject jsonObject) {
         try {

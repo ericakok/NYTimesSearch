@@ -12,14 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 
 import com.example.ekok.nytimessearch.Article;
 import com.example.ekok.nytimessearch.ArticleArrayAdapter;
 import com.example.ekok.nytimessearch.EndlessScrollListener;
 import com.example.ekok.nytimessearch.R;
+import com.example.ekok.nytimessearch.SearchFilters;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -34,13 +33,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
 
-    EditText etQuery;
     GridView gvResults;
-    Button btnSearch;
     String query;
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
+
+    SearchFilters filters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,20 +93,25 @@ public class SearchActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_search, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        // Expand the search view and request focus
-        searchItem.expandActionView();
+
+
+        searchView.setQueryHint("Searching for something?");
         searchView.requestFocus();
+
+        inflater.inflate(R.menu.menu_filter, menu);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String q) {
                 // perform query here
                 query = q;
+
                 onArticleSearch(searchView);
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
-                searchView.clearFocus();
 
+                searchView.clearFocus();
+                adapter.clear();
                 return true;
             }
 
@@ -117,6 +121,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+
 
     }
 
@@ -128,7 +133,7 @@ public class SearchActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
             return true;
         }
 
@@ -147,6 +152,10 @@ public class SearchActivity extends AppCompatActivity {
         params.put("api-key", "09ce45605b1e44f1a69bf81db1375f84");
         params.put("page", 0);
         params.put("q", query);
+
+        params.put("begin_date", filters.getBegin_date());
+        params.put("sort", filters.getSort());
+        params.put("news_desk", filters.getNews_desk());
 
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -201,4 +210,8 @@ public class SearchActivity extends AppCompatActivity {
         });
 
     }
+
+//    public void onPopupButtonClick(MenuItem item) {
+//        Toast.makeText(this, "Clicked!", Toast.LENGTH_LONG);
+//    }
 }

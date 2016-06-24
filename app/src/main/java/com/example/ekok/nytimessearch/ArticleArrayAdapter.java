@@ -37,6 +37,7 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         // find the image view
         ImageView imageView = (ImageView) convertView.findViewById(R.id.ivImage);
 
+
         // clear out recycled image from convertView from last time
         imageView.setImageResource(0);
 
@@ -50,8 +51,12 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         String thumbnail = article.getThumbNail();
 
         if (!TextUtils.isEmpty(thumbnail)) {
-            Picasso.with(getContext()).load(thumbnail).into(imageView);
+            Picasso.with(getContext()).load(thumbnail)
+                    .placeholder(R.drawable.load)
+                    .error(R.drawable.no_image)
+                    .into(imageView);
         }
+
         return convertView;
     }
 }

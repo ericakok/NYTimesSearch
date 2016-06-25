@@ -45,6 +45,9 @@ public class SearchActivity extends AppCompatActivity {
 
     public static final int AGE_REQUEST_CODE = 55;
 
+//    FrameLayout frameLayoutBalance = (FrameLayout) view.findViewById(R.id.frameLayoutBalance);
+//    frameLayoutBalance.setBackgroundColor(getResources().getColor(R.color.gray));
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

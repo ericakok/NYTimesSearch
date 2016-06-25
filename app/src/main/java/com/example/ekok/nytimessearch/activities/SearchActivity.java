@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.ekok.nytimessearch.Article;
 import com.example.ekok.nytimessearch.ArticleArrayAdapter;
@@ -233,15 +232,12 @@ public class SearchActivity extends AppCompatActivity {
             // Extract name value from result extras
             String date = data.getExtras().getString("etDate");
             String sort = data.getExtras().getString("spinnerSort");
-            String arts = data.getExtras().getString("cbArts");
-            String fashion = data.getExtras().getString("cbFashion");
-            String sports = data.getExtras().getString("cbSports");
+            //Boolean arts = data.getBooleanExtra("cbArts", );
 
-            Toast.makeText(this, date, Toast.LENGTH_LONG).show();
-            Toast.makeText(this, sort, Toast.LENGTH_LONG).show();
-            Toast.makeText(this, arts, Toast.LENGTH_LONG).show();
-            Toast.makeText(this, fashion, Toast.LENGTH_LONG).show();
-            Toast.makeText(this, sports, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, date, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, sort, Toast.LENGTH_LONG).show();
+
+
         }
     }
 
